@@ -2,6 +2,7 @@
 <html>
 
 <head>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <!-- Normalize.css for better cross-browser consistency -->
   <link rel="stylesheet" src="//normalize-css.googlecode.com/svn/trunk/normalize.css" />
   <!-- Main CSS file -->
@@ -14,10 +15,10 @@
   <header>
     <!-- Beginning nav -->
     <nav>
-      <h1><a href="index.html">Restaurant Reviews</a></h1>
+      <h1 aria-label="main header"><a href="index.html" aria-label="main header">Restaurant Reviews</a></h1>
     </nav>
     <!-- Beginning breadcrumb -->
-    <ul id="breadcrumb" >
+    <ul id="breadcrumb" aria-label="list of directory">
       <li><a href="index.html">Home</a></li>
     </ul>
     <!-- End breadcrumb -->
@@ -28,29 +29,29 @@
   <!-- Beginning main -->
   <main id="maincontent">
     <!-- Beginning map -->
-    <section id="map-container">
+    <section id="map-container" aria-label="google map">
       <div id="map"></div>
     </section>
     <!-- End map -->
     <!-- Beginning restaurant -->
-    <section id="restaurant-container">
-      <h1 id="restaurant-name"></h1>
-      <img id="restaurant-img">
-      <p id="restaurant-cuisine"></p>
-      <p id="restaurant-address"></p>
-      <table id="restaurant-hours"></table>
+    <section id="restaurant-container" aria-label="restaurant information section">
+      <h1 id="restaurant-name" aria-label="restaurant name header"></h1>
+      <img id="restaurant-img" alt="restaurant image">
+      <p id="restaurant-cuisine" aria-label="restaurant detail information"></p>
+      <p id="restaurant-address" aria-label="restaurant address information"></p>
+      <table id="restaurant-hours" aria-label="restaurant opening hours information"></table>
     </section>
     <!-- end restaurant -->
     <!-- Beginning reviews -->
-    <section id="reviews-container">
-      <ul id="reviews-list"></ul>
+    <section id="reviews-container" aria-label="restaurant review section">
+      <ul id="reviews-list" aria-label="restaurant reviews"></ul>
     </section>
     <!-- End reviews -->
   </main>
   <!-- End main -->
 
   <!-- Beginning footer -->
-  <footer id="footer">
+  <footer id="footer" aria-label="footer with Copyright">
     Copyright (c) 2017 <a href="index.html"><strong>Restaurant Reviews</strong></a> All Rights Reserved.
   </footer>
   <!-- End footer -->

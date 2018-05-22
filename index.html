@@ -12,7 +12,7 @@
 <body>
   <header>
     <nav>
-      <h1><a href="index.html" tabindex="0">Restaurant Reviews</a></h1>
+      <h1><a href="index.html" tabindex="0" aria-label="main header">Restaurant Reviews</a></h1>
     </nav>
   </header>
 
@@ -20,17 +20,17 @@
     <section id="map-container" aria-hidden="true" aria-label="google map" tabindex="-1">
       <div id="map" aria-hidden="true" role="application"></div>
     </section>
-    <section  id="main-container">
-      <div class="filter-options">
-        <h2>Filter Results</h2>
-        <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()">
+    <section id="main-container" aria-label="filter and result">
+      <div class="filter-options" aria-label="filter section">
+        <h2 aria-label="search filter">Filter Results</h2>
+        <select id="neighborhoods-select" name="neighborhoods" onchange="updateRestaurants()" aria-label="neighborhood filter">
           <option value="all">All Neighborhoods</option>
         </select>
-        <select id="cuisines-select" name="cuisines" onchange="updateRestaurants()">
+        <select id="cuisines-select" name="cuisines" onchange="updateRestaurants()" aria-label="cuisine filter">
           <option value="all">All Cuisines</option>
         </select>
       </div>
-      <ul id="restaurants-list"></ul>
+      <ul id="restaurants-list" aria-label="restaurants list"></ul>
     </section>
   </main>
 
