@@ -1,4 +1,4 @@
-//var version = 'v1';
+/// Cache implementation from https://developers.google.com/web/fundamentals/primers/service-workers/
 var CACHE_NAME = 'cache-v1';
 var urlsToCache = [
     '/',
@@ -23,11 +23,9 @@ var urlsToCache = [
 console.log('WORKER: Starting');
 
 self.addEventListener('install', function(event) {
-  // Perform install steps
-  event.waitUntil(
-    caches.open(CACHE_NAME)
+  event.waitUntil(caches.open(CACHE_NAME)
       .then(function(cache) {
-        console.log('Opened cache');
+        console.log('WORKER: Opened cache');
         return cache.addAll(urlsToCache);
       })
   );
@@ -40,20 +38,16 @@ self.addEventListener('fetch', function(event) {
           return response;
         }
         var fetchRequest = event.request.clone();
-
-        return fetch(fetchRequest).then(
-          function(response) {
+        return fetch(fetchRequest).
+          then(function(response) {
             if(!response || response.status !== 200 || response.type !== 'basic') {
               return response;
             }
-
             var responseToCache = response.clone();
-
             caches.open(CACHE_NAME)
               .then(function(cache) {
                 cache.put(event.request, responseToCache);
               });
-
             return response;
           }
         );
@@ -62,9 +56,7 @@ self.addEventListener('fetch', function(event) {
 });
 
 self.addEventListener('activate', function(event) {
-
   var cacheWhitelist = ['pagesCache-v1'];
-
   event.waitUntil(
     caches.keys().then(function(cacheNames) {
       return Promise.all(
