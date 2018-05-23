@@ -109,7 +109,7 @@
   /* ====================== Restaurant Filtering ====================== */
   .filter-options {
     width: 100%;
-    height: 50px;
+    /*height: 50px;*/
     background-color: #3397DB;
     align-items: center;
   }
@@ -346,17 +346,17 @@
 
 
   @media only screen and (max-width: 600px)  {
-  /*table{
-  width: 80% !important;
-  }
-
-  #restaurant-img, #reviews-list {
-  width: 80% !important;
-  }*/
   #map-container {
     display: none !important;
   }
   .inside #footer {
-    width: 90% !important;
+    width: 120% !important;
+  }
+  #restaurant-container, #reviews-container, #reviews-list {
+    width: 120% !important;
+  }
+  body {
+    background-color: #f3f3f3 !important;
+
   }
 }
