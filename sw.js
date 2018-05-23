@@ -1,12 +1,6 @@
-var version = 'v1::';
-
-console.log('WORKER: Starting');
-
-self.addEventListener("install", function(event) {
-  console.log('WORKER: install event in progress.');
-  event.waitUntil(caches.open(version + 'fundamentals')
-      .then(function(cache) {
-        return cache.addAll([
+//var version = 'v1';
+var CACHE_NAME = 'cache-v1';
+var urlsToCache = [
     '/',
     'index.html',
     'restaurant.html',
@@ -24,65 +18,62 @@ self.addEventListener("install", function(event) {
     'img/8.jpg',
     'img/9.jpg',
     'img/10.jpg',
-]);
-      })
-      .then(function() {
-        console.log('WORKER: install completed');
+];
+
+console.log('WORKER: Starting');
+
+self.addEventListener('install', function(event) {
+  // Perform install steps
+  event.waitUntil(
+    caches.open(CACHE_NAME)
+      .then(function(cache) {
+        console.log('Opened cache');
+        return cache.addAll(urlsToCache);
       })
   );
 });
-self.addEventListener("fetch", function(event) {
-  console.log('WORKER: fetch event in progress.');
-  if (event.request.method !== 'GET') {
-    console.log('WORKER: fetch event ignored.', event.request.method, event.request.url);
-    return;
-  }
-  event.respondWith(
-    caches.match(event.request).then(function(cached) {
-        var networked = fetch(event.request)
-          .then(fetchedFromNetwork, unableToResolve)
-          .catch(unableToResolve);
-        console.log('WORKER: fetch event', cached ? '(cached)' : '(network)', event.request.url);
-        return cached || networked;
-        function fetchedFromNetwork(response) {
-          var cacheCopy = response.clone();
-          console.log('WORKER: fetch response from network.', event.request.url);
-          caches.open(version + 'pages')
-          .then(function add(cache) {
-              cache.put(event.request, cacheCopy);
-            })
-            .then(function() {
-              console.log('WORKER: fetch response stored in cache.', event.request.url);
-            });
+
+self.addEventListener('fetch', function(event) {
+  event.respondWith(caches.match(event.request)
+      .then(function(response) {
+        if (response) {
           return response;
         }
-        function unableToResolve () {
-          console.log('WORKER: fetch request failed in both cache and network.');
-          return new Response('<h1>Service Unavailable</h1>', {
-            status: 503,
-            statusText: 'Service Unavailable',
-            headers: new Headers({
-              'Content-Type': 'text/html'
-            })
-          });
-        }
-      })
-  );
-});
-self.addEventListener("activate", function(event) {
-  console.log('WORKER: activate event in progress.');
-  event.waitUntil(
-    caches.keys().then(function (keys) {
-        return Promise.all(keys.filter(function (key) {
-              return !key.startsWith(version);
-            })
-            .map(function (key) {
-              return caches.delete(key);
-            })
+        var fetchRequest = event.request.clone();
+
+        return fetch(fetchRequest).then(
+          function(response) {
+            if(!response || response.status !== 200 || response.type !== 'basic') {
+              return response;
+            }
+
+            var responseToCache = response.clone();
+
+            caches.open(CACHE_NAME)
+              .then(function(cache) {
+                cache.put(event.request, responseToCache);
+              });
+
+            return response;
+          }
         );
       })
-      .then(function() {
-        console.log('WORKER: activate completed.');
-      })
+    );
+});
+
+self.addEventListener('activate', function(event) {
+
+  var cacheWhitelist = ['pagesCache-v1'];
+
+  event.waitUntil(
+    caches.keys().then(function(cacheNames) {
+      return Promise.all(
+        cacheNames.map(function(cacheName) {
+          if (cacheWhitelist.indexOf(cacheName) === -1) {
+            return caches.delete(cacheName);
+          }
+        })
+      );
+    })
   );
 });
