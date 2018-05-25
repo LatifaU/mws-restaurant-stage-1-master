@@ -141,7 +141,7 @@
     margin: 0;
     padding: 30px 15px 60px;
     text-align: center;
-    /* display: flex; */
+    display: flex;
     flex-wrap: wrap;
     justify-content: center;
   }
@@ -345,7 +345,7 @@
   }
 
 
-  @media only screen and (max-width: 600px)  {
+  /*@media only screen and (max-width: 600px)  {
     .inside #map-container {
       display: none !important;
     }
@@ -361,9 +361,9 @@
     #breadcrumb {
       width: 120% !important;
     }
-  }
+  }*/
 
-  @media only screen and (min-width: 100px)  {
+  /*@media only screen and (min-width: 100px)  {
     #restaurants-list {
       display: block !important;
     }
@@ -385,4 +385,25 @@
     #restaurant-container, #reviews-container, #reviews-list {
       width: 120% !important;
     }
+  }*/
+
+  @media only screen and (min-width: 100px)  {
+    .filter-options {
+      width: 100% !important;
+    }
+    #neighborhoods-select, #cuisines-select {
+      width: 70% !important;
+      font-size: 7pt;
+    }
+    #restaurants-list li  {
+      width:40%;
+      margin: 5px;
+    }
+    #restaurants-list li h1, #restaurants-list li p, #restaurants-list li a {
+    font-size: 7pt;
+  }
+  nav h1 a {
+    font-size: 10pt;
+    letter-spacing: 2px;
+  }
   }
